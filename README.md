@@ -13,7 +13,7 @@ I made some minor modifications and added the code from the first comment that a
 
 ### Instructions ###
 
-1. Add this script to ~/Library/Scripts/OmniFocus/
+1. Add this script to ~/Library/Scripts/Applications/OmniFocus/
 2. Add the Script menu to your menu bar
 3. Bring OmniFocus to the front
 4. click on the Script icon in the menubar and select the script, then select the duration in the pop-up
