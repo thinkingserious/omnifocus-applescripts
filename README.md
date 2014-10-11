@@ -1,5 +1,7 @@
 This is a directory of Apple Scripts to augment the functionality of OmniFocus on the Mac
 
+THIS CODE CARRIES NO WARRANTY. Always backup your data before running scripts that interact with your data.
+
 To get the source code to appear on GitHub, I used the [technique explained by Daniel Trebbien on StackOverflow](http://stackoverflow.com/questions/7641806/how-would-you-put-an-applescript-script-under-version-control). 
 
 ## Completed Task Report ##
