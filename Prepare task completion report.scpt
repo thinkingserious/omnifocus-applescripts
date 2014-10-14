@@ -105,6 +105,7 @@ end if
 -- Create the note in Evernote.
 tell application "Evernote"
 	activate
-	set theNote to create note notebook theNotebookName title theNoteName with html theProgressDetail
+	set theReportDate to do shell script "date +%Y-%m-%d"
+	set theNote to create note notebook theNotebookName title theReportDate & " :: " & theNoteName with html theProgressDetail
 	open note window with theNote
 end tell
