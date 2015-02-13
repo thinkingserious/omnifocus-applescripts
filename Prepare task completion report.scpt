@@ -1,3 +1,5 @@
+-- This script is based on the code here: http://www.tuaw.com/2013/02/18/applescripting-omnifocus-send-completed-task-report-to-evernot/
+
 -- Prepare a name for the new Evernote note
 set theNoteName to "OmniFocus Completed Task Report"
 set theNotebookName to ".Inbox"
