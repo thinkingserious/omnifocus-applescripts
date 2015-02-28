@@ -6,7 +6,7 @@ set theNotebookName to ".Inbox"
 
 -- Prompt the user to choose a scope for the report
 activate
-set theReportScope to choose from list {"Today", "Yesterday", "This Week", "Last Week", "This Month"} default items {"Yesterday"} with prompt "Generate a report for:" with title theNoteName
+set theReportScope to choose from list {"Today", "Yesterday", "This Week", "Last Week", "This Month", "Last Month"} default items {"Yesterday"} with prompt "Generate a report for:" with title theNoteName
 if theReportScope = false then return
 set theReportScope to item 1 of theReportScope
 
@@ -42,6 +42,16 @@ else if theReportScope = "Last Week" then
 	end repeat
 	set theDateRange to (date string of theStartDate) & " through " & (date string of theEndDate)
 else if theReportScope = "This Month" then
+	repeat until (day of theStartDate) = 1
+		set theStartDate to theStartDate - 1 * days
+	end repeat
+	repeat until (month of theEndDate) is not equal to (month of theStartDate)
+		set theEndDate to theEndDate + 1 * days
+	end repeat
+	set theEndDate to theEndDate - 1 * days
+	set theDateRange to (date string of theStartDate) & " through " & (date string of theEndDate)
+else if theReportScope = "Last Month" then
+	set (month of theStartDate) to (month of theStartDate) - 1
 	repeat until (day of theStartDate) = 1
 		set theStartDate to theStartDate - 1 * days
 	end repeat
@@ -93,7 +103,7 @@ tell application "OmniFocus"
 			end repeat
 			set theInboxProgressDetail to theInboxProgressDetail & "</ul>" & return
 		end if
-		
+
 	end tell
 end tell
 set theProgressDetail to theProgressDetail & theInboxProgressDetail & "</body></html>"
