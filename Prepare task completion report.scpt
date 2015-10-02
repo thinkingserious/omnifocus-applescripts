@@ -57,6 +57,7 @@ else if theReportScope = "Last Month" then
 	else
 		set (month of theStartDate) to (month of theStartDate) - 1
 	end if
+	set month of theEndDate to month of theStartDate
 	repeat until (day of theStartDate) = 1
 		set theStartDate to theStartDate - 1 * days
 	end repeat
