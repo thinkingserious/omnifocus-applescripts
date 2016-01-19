@@ -77,7 +77,7 @@ set theInboxProgressDetail to "<br>"
 set modifiedTasksDetected to false
 tell application "OmniFocus"
 	tell front document
-		set theModifiedProjects to every flattened project where its modification date is greater than theStartDate and modification date is less than theEndDate
+		set theModifiedProjects to every flattened project where its modification date is greater than theStartDate
 		-- Loop through any detected projects
 		repeat with a from 1 to length of theModifiedProjects
 			set theCurrentProject to item a of theModifiedProjects
