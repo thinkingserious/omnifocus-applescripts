@@ -82,7 +82,7 @@ tell application "OmniFocus"
 		repeat with a from 1 to length of theModifiedProjects
 			set theCurrentProject to item a of theModifiedProjects
 			-- Retrieve any project tasks modified within the specified scope
-			set theCompletedTasks to (every flattened task of theCurrentProject where its completed = true and modification date is greater than theStartDate and modification date is less than theEndDate and number of tasks = 0)
+			set theCompletedTasks to (every flattened task of theCurrentProject where its completed = true and completion date is greater than theStartDate and completion date is less than theEndDate and number of tasks = 0)
 			-- Loop through any detected tasks
 			if theCompletedTasks is not equal to {} then
 				set modifiedTasksDetected to true
@@ -97,7 +97,7 @@ tell application "OmniFocus"
 			end if
 		end repeat
 		-- Include the OmniFocus inbox
-		set theInboxCompletedTasks to (every inbox task where its completed = true and modification date is greater than theStartDate and modification date is less than theEndDate and number of tasks = 0)
+		set theInboxCompletedTasks to (every inbox task where its completed = true and completion date is greater than theStartDate and completion date is less than theEndDate and number of tasks = 0)
 		-- Loop through any detected tasks
 		if theInboxCompletedTasks is not equal to {} then
 			set modifiedTasksDetected to true
