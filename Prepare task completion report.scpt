@@ -6,7 +6,7 @@ set theNotebookName to ".Inbox"
 
 -- Prompt the user to choose a scope for the report
 activate
-set theReportScope to choose from list {"Today", "Yesterday", "This Week", "Last Week", "This Month"} default items {"Yesterday"} with prompt "Generate a report for:" with title theNoteName
+set theReportScope to choose from list {"Today", "Yesterday", "This Week", "Last Week", "This Month", "Last Month"} default items {"Yesterday"} with prompt "Generate a report for:" with title theNoteName
 if theReportScope = false then return
 set theReportScope to item 1 of theReportScope
 
@@ -50,6 +50,23 @@ else if theReportScope = "This Month" then
 	end repeat
 	set theEndDate to theEndDate - 1 * days
 	set theDateRange to (date string of theStartDate) & " through " & (date string of theEndDate)
+else if theReportScope = "Last Month" then
+	if (month of theStartDate) = January then
+		set (year of theStartDate) to (year of theStartDate) - 1
+		set (month of theStartDate) to December
+	else
+		set (month of theStartDate) to (month of theStartDate) - 1
+	end if
+	set month of theEndDate to month of theStartDate
+	set year of theEndDate to year of theStartDate
+	repeat until (day of theStartDate) = 1
+		set theStartDate to theStartDate - 1 * days
+	end repeat
+	repeat until (month of theEndDate) is not equal to (month of theStartDate)
+		set theEndDate to theEndDate + 1 * days
+	end repeat
+	set theEndDate to theEndDate - 1 * days
+	set theDateRange to (date string of theStartDate) & " through " & (date string of theEndDate)
 end if
 
 -- Begin preparing the task list as HTML
@@ -60,12 +77,12 @@ set theInboxProgressDetail to "<br>"
 set modifiedTasksDetected to false
 tell application "OmniFocus"
 	tell front document
-		set theModifiedProjects to every flattened project where its modification date is greater than theStartDate and modification date is less than theEndDate
+		set theModifiedProjects to every flattened project where its modification date is greater than theStartDate
 		-- Loop through any detected projects
 		repeat with a from 1 to length of theModifiedProjects
 			set theCurrentProject to item a of theModifiedProjects
 			-- Retrieve any project tasks modified within the specified scope
-			set theCompletedTasks to (every flattened task of theCurrentProject where its completed = true and modification date is greater than theStartDate and modification date is less than theEndDate and number of tasks = 0)
+			set theCompletedTasks to (every flattened task of theCurrentProject where its completed = true and completion date is greater than theStartDate and completion date is less than theEndDate and number of tasks = 0)
 			-- Loop through any detected tasks
 			if theCompletedTasks is not equal to {} then
 				set modifiedTasksDetected to true
@@ -80,7 +97,7 @@ tell application "OmniFocus"
 			end if
 		end repeat
 		-- Include the OmniFocus inbox
-		set theInboxCompletedTasks to (every inbox task where its completed = true and modification date is greater than theStartDate and modification date is less than theEndDate and number of tasks = 0)
+		set theInboxCompletedTasks to (every inbox task where its completed = true and completion date is greater than theStartDate and completion date is less than theEndDate and number of tasks = 0)
 		-- Loop through any detected tasks
 		if theInboxCompletedTasks is not equal to {} then
 			set modifiedTasksDetected to true
@@ -93,7 +110,7 @@ tell application "OmniFocus"
 			end repeat
 			set theInboxProgressDetail to theInboxProgressDetail & "</ul>" & return
 		end if
-		
+
 	end tell
 end tell
 set theProgressDetail to theProgressDetail & theInboxProgressDetail & "</body></html>"
